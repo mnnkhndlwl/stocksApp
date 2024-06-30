@@ -9,29 +9,42 @@ import {
 } from 'react-native';
 import {fs, h, w} from '../../../utils/util.style';
 import {fetchGainLoss} from '../../../API/FetchGainLoss';
+import Empty from '../../../components/Empty';
+import Loader from '../../../components/Loader';
 
 export default function TopLosersScreen({navigation}) {
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const loadStockData = async () => {
       const data = await fetchGainLoss();
-      setData(data?.top_losers);
+      setData(data?.top_losers || []);
       setLoading(false);
     };
 
     loadStockData();
   }, []);
 
-  if (!data?.map) {
-    return <></>;
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (data?.length === 0) {
+    return <Empty />;
   } else
     return (
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {data?.map(StockData => {
+        {data?.map((StockData, index) => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate('Details')}>
+            <TouchableOpacity
+              key={index}
+              onPress={() =>
+                navigation.navigate('Details', {
+                  ticker: StockData?.ticker,
+                  gain: false,
+                })
+              }>
               <View style={styles.card}>
                 <Image
                   resizeMode="contain"

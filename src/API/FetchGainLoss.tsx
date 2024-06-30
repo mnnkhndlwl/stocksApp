@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {STOCK_API_KEY} from '../constants';
+import {ToastAndroid} from 'react-native';
 
 const API_URL = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${STOCK_API_KEY}`;
 const CACHE_KEY = 'stock_data_cache';
@@ -15,18 +16,20 @@ export const fetchGainLoss = async () => {
       return JSON.parse(cachedData);
     }
 
-    // const response = await axios.get(API_URL);
+    const response = await axios.get(API_URL);
 
-    // if (response.status === 200) {
-    //   const data = response.data;
+    if (response.status === 200) {
+      const data = response.data;
 
-    //   // Cache the data
-    //   await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-    //   console.log(data);
-    //   return data;
-    // }
+      // Cache the data
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      // console.log(data);
+      return data;
+    }
   } catch (error) {
-    console.error('Error fetching stock data:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+    console.error('Error fetching stock data:', errorMessage);
   }
 
   return null;

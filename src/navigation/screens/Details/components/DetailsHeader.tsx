@@ -2,7 +2,15 @@ import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {fs, h} from '../../../../utils/util.style';
 
-function DetailsHeader() {
+function DetailsHeader({
+  companyName,
+  symbol,
+  assetType,
+  exchange,
+  currentPrice,
+  changePercentage,
+  gain,
+}) {
   return (
     <View style={styles.container}>
       <Image
@@ -11,18 +19,24 @@ function DetailsHeader() {
         source={require('../../../../assests/images/google.png')}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.companyName}>APPLE INC</Text>
-        <Text style={styles.companyInfo}>APPL, Common Stock</Text>
-        <Text style={styles.companyInfo}>NSQ</Text>
+        <Text style={styles.companyName}>{companyName}</Text>
+        <Text style={styles.companyInfo}>
+          {symbol} {assetType}
+        </Text>
+        <Text style={styles.companyInfo}>{exchange}</Text>
       </View>
       <View style={styles.priceContainer}>
-        <Text style={styles.price}>$122</Text>
+        <Text style={styles.price}>{currentPrice}</Text>
         <View style={styles.percentageContainer}>
-          <Text style={styles.percentage}>+ 0.45%</Text>
+          <Text style={styles.percentage(gain)}>{changePercentage}</Text>
           <Image
             resizeMode="contain"
             style={styles.triangle}
-            source={require('../../../../assests/images/triangle.png')}
+            source={
+              gain === true
+                ? require('../../../../assests/images/triangle.png')
+                : require('../../../../assests/images/down.png')
+            }
           />
         </View>
       </View>
@@ -71,11 +85,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: fs(6),
   },
-  percentage: {
+  percentage: gain => ({
     fontSize: fs(12),
     fontWeight: 'bold',
-    color: 'green',
-  },
+    color: gain === true ? 'green' : 'red',
+  }),
   triangle: {
     width: fs(12),
     height: fs(12),
