@@ -18,7 +18,10 @@ export const fetchCompanyOverview = async ({ticker}) => {
       const currentTime = new Date().getTime();
 
       // Check if cache is still valid
-      if (currentTime - parsedData.timestamp < CACHE_EXPIRY_MS) {
+      if (parsedData?.data['Information']) {
+        console.log('dfsdgsdgds');
+        AsyncStorage.removeItem(ticker);
+      } else if (currentTime - parsedData.timestamp < CACHE_EXPIRY_MS) {
         return parsedData.data;
       }
     }

@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   switchContainer: {
-    width: w(40),
+    width: w(50),
     alignItems: 'center',
     justifyContent: 'center',
   },

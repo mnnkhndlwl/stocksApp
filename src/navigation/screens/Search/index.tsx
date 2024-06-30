@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: fs(10),
   },
   searchInput: {
-    height: fs(25),
+    height: fs(45),
     width: w(95),
     backgroundColor: 'white',
     borderRadius: fs(5),

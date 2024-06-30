@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: fs(10),
   },
   textContainer: {
-    width: '70%',
+    width: '60%',
   },
   companyName: {
     fontWeight: 'bold',

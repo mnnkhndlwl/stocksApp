@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
     marginRight: fs(10),
   },
   searchInput: {
-    height: fs(25),
-    width: fs(150),
+    height: fs(35),
+    width: fs(170),
     backgroundColor: 'white',
     borderRadius: fs(5),
     paddingHorizontal: fs(10),
     borderColor: 'black',
     borderWidth: fs(1),
-    fontSize: fs(12),
+    fontSize: fs(16),
     paddingVertical: fs(4),
   },
   headerStyle: {
