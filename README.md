@@ -1,79 +1,87 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# ⭐ Stocks App built with React Native ⭐
 
-# Getting Started
+<div align="center">
+  <img src="https://github.com/mnnkhndlwl/stocksApp/assets/75252077/2503968c-2b26-41a5-9b76-cb3bbb3c5bb6" alt="App Screenshot" width="500"/>
+</div>
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Table of Contents
 
-## Step 1: Start the Metro Server
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Feedback](#feedback)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Overview
 
-To start Metro, run the following command from the _root_ of your React Native project:
+The Stocks App is a React Native application that allows users to view stock market data, including top gainers and losers, and a detailed overview of companies. The app also includes internal caching for efficient data retrieval.
 
-```bash
-# using npm
-npm start
+## Key Features
 
-# OR using Yarn
-yarn start
-```
+- View top gainers and losers
+- View a company's overview
+- Search stocks
+- Internal caching of data
 
-## Step 2: Start your Application
+## Installation
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+To get a local copy up and running, follow these simple steps:
 
-### For Android
+### Prerequisites
 
-```bash
-# using npm
-npm run android
+- Ensure you have Node.js installed. You can download it from [here](https://nodejs.org/).
 
-# OR using Yarn
-yarn android
-```
+### Installation Steps
 
-### For iOS
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/mnnkhndlwl/stocksApp.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd stocksApp
+    ```
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
+4. Start the development server:
+    ```sh
+    npm run start
+    ```
+5. Start the app in emulator/device:
+    ```sh
+    npm run android/ios
+    ```    
 
-```bash
-# using npm
-npm run ios
+## Usage
 
-# OR using Yarn
-yarn ios
-```
+1. Open the app on your device or simulator.
+2. Use the search bar to look for specific stocks.
+3. View the top gainers and losers on the main screen.
+4. Tap on any stock to see its detailed overview.
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## Contributing
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Step 3: Modifying your App
+### How to Contribute
 
-Now that you have successfully run the app, let's modify it.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## License
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Congratulations! :tada:
+## Feedback
 
-You've successfully run and modified your React Native App. :partying_face:
+If you have any feedback or suggestions, please reach out to the maintainers:
+* [Manan Khandelwal](https://github.com/mnnkhndlwl)
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---
