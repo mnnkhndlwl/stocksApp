@@ -5,25 +5,39 @@ import {ToastAndroid} from 'react-native';
 
 const API_URL = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${STOCK_API_KEY}`;
 const CACHE_KEY = 'stock_data_cache';
+const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export const fetchGainLoss = async () => {
   try {
     const cachedData = await AsyncStorage.getItem(CACHE_KEY);
 
     if (cachedData) {
-      // Parse and return cached data if available
-      // console.log('cachedData===================>', cachedData);
-      return JSON.parse(cachedData);
+      const parsedData = JSON.parse(cachedData);
+      const currentTime = new Date().getTime();
+
+      // Check if cache is still valid
+      if (currentTime - parsedData.timestamp < CACHE_EXPIRY_MS) {
+        return parsedData.data;
+      }
     }
 
     const response = await axios.get(API_URL);
 
     if (response.status === 200) {
       const data = response.data;
+      if (data['Error Message']) {
+        const errorMessage = data['Error Message'];
+        ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+        console.error('API error:', errorMessage);
+        return null;
+      }
 
-      // Cache the data
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      // console.log(data);
+      // Cache the data with a timestamp
+      const cacheEntry = {
+        data: data,
+        timestamp: new Date().getTime(),
+      };
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(cacheEntry));
       return data;
     }
   } catch (error) {

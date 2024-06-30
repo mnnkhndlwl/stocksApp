@@ -9,6 +9,7 @@ import Loader from '../../../components/Loader';
 import {fetchCompanyOverview} from '../../../API/FetchCompanyOverview';
 import Empty from '../../../components/Empty';
 import {fetchHistoricalData} from '../../../API/FetchWeeklyData';
+import BottomInfo from './components/BottomInfo';
 
 function DetailsScreen({navigation, route}) {
   const [data, setData] = React.useState([]);
@@ -31,7 +32,7 @@ function DetailsScreen({navigation, route}) {
     };
 
     loadStockData();
-  }, []);
+  }, [route?.params?.ticker]);
 
   // const filterDataByInterval = interval => {
   //   if (!chart || !chart['Weekly Time Series']) {
@@ -119,11 +120,7 @@ function DetailsScreen({navigation, route}) {
   } else {
     const globalQuote = data['Global Quote'];
     return (
-      <ScrollView
-        contentContainerStyle={{
-          backgroundColor: 'white',
-          alignItems: 'center',
-        }}>
+      <ScrollView contentContainerStyle={styles.mainContainer}>
         <DetailsHeader
           gain={route?.params?.gain}
           assetType={data?.AssetType}
@@ -139,12 +136,7 @@ function DetailsScreen({navigation, route}) {
             labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
           />
         </View>
-        <View
-          style={{
-            width: w(40),
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={styles.switchContainer}>
           <SwitchSelector
             initial={0}
             onPress={value => {
@@ -166,242 +158,41 @@ function DetailsScreen({navigation, route}) {
           />
         </View>
 
-        <View
-          style={{
-            borderRadius: fs(10),
-            borderWidth: fs(2),
-            marginVertical: fs(16),
-
-            width: w(96),
-          }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: fs(12),
-              color: 'black',
-              borderBottomColor: 'black',
-              borderBottomWidth: fs(2),
-              padding: fs(10),
-            }}>
-            About {route?.params?.ticker}
-          </Text>
-          <Text
-            style={{
-              padding: fs(10),
-              fontWeight: 'normal',
-              fontSize: fs(10),
-              color: 'black',
-              textAlign: 'justify',
-              lineHeight: fs(16),
-            }}>
-            {data?.Description}
-          </Text>
-          <View
-            style={{
-              padding: fs(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              gap: fs(10),
-            }}>
-            <View
-              style={{
-                padding: fs(12),
-                backgroundColor: '#e26a00',
-                borderRadius: fs(50),
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'white',
-                  fontSize: fs(12),
-                }}>
-                Industry: {data?.Industry}
-              </Text>
+        <View style={styles.aboutContainer}>
+          <Text style={styles.aboutTitle}>About {route?.params?.ticker}</Text>
+          <Text style={styles.description}>{data?.Description}</Text>
+          <View style={styles.tagContainer}>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>Industry: {data?.Industry}</Text>
             </View>
-            <View
-              style={{
-                padding: fs(12),
-                backgroundColor: '#e26a00',
-                borderRadius: fs(50),
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'white',
-                  fontSize: fs(12),
-                }}>
-                Sector: {data?.Sector}
-              </Text>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>Sector: {data?.Sector}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              padding: fs(10),
-              justifyContent: 'space-evenly',
-            }}>
-            <View
-              style={{
-                flexDirection: 'column',
-                gap: fs(4),
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  fontSize: fs(12),
-                  color: 'black',
-                }}>
-                52-Week-low
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  fontSize: fs(12),
-                  color: 'black',
-                }}>
-                $ {data['52WeekLow']}
-              </Text>
+          <View style={styles.priceStripContainer}>
+            <View style={styles.highLowTextContainer}>
+              <Text style={styles.highLowText}>52-Week-low</Text>
+              <Text style={styles.highLowText}>$ {data['52WeekLow']}</Text>
             </View>
             <PriceStrip
               low={Number(data['52WeekLow'])}
               high={Number(data['52WeekHigh'])}
               current={globalQuote['05. price']}
             />
-            <View
-              style={{
-                flexDirection: 'column',
-                gap: fs(4),
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  fontSize: fs(12),
-                  color: 'black',
-                }}>
-                52-Week-High
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  fontSize: fs(12),
-                  color: 'black',
-                }}>
-                $ {data['52WeekHigh']}
-              </Text>
+            <View style={styles.highLowTextContainer}>
+              <Text style={styles.highLowText}>52-Week-High</Text>
+              <Text style={styles.highLowText}>$ {data['52WeekHigh']}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              flexWrap: 'wrap',
-              marginVertical: fs(10),
-            }}>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                Market Cap
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                ${Number(data?.MarketCapitalization) / 1000000000000}T
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                PERatio
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                {data?.PERatio}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                Beta
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                {data?.Beta}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                BookValue
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                {data?.BookValue}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'normal',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                EPS
-              </Text>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: fs(12),
-                }}>
-                {data?.EPS}
-              </Text>
-            </View>
+          <View style={styles.bottomInfoContainer}>
+            <BottomInfo
+              info={'Market Cap'}
+              value={`${Number(data?.MarketCapitalization) / 1000000000000}T`}
+            />
+            <BottomInfo info={'PERatio'} value={data?.PERatio} />
+            <BottomInfo info={'Beta'} value={data?.Beta} />
+            <BottomInfo info={'BookValue'} value={data?.BookValue} />
+            <BottomInfo info={'EPS'} value={data?.EPS} />
           </View>
         </View>
       </ScrollView>
@@ -412,6 +203,13 @@ function DetailsScreen({navigation, route}) {
 export default DetailsScreen;
 
 const styles = StyleSheet.create({
+  aboutContainer: {
+    borderRadius: fs(10),
+    borderWidth: fs(2),
+    marginVertical: fs(16),
+
+    width: w(96),
+  },
   triangle: {
     width: fs(12),
     height: fs(12),
@@ -419,5 +217,66 @@ const styles = StyleSheet.create({
   chartContainer: {
     marginVertical: 16,
     paddingHorizontal: 16,
+  },
+  bottomInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flexWrap: 'wrap',
+    marginVertical: fs(10),
+  },
+  highLowText: {
+    fontWeight: 'normal',
+    fontSize: fs(12),
+    color: 'black',
+  },
+  highLowTextContainer: {
+    flexDirection: 'column',
+    gap: fs(4),
+  },
+  priceStripContainer: {
+    flexDirection: 'row',
+    padding: fs(10),
+    justifyContent: 'space-evenly',
+  },
+  mainContainer: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  switchContainer: {
+    width: w(40),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aboutTitle: {
+    fontWeight: 'bold',
+    fontSize: fs(12),
+    color: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: fs(2),
+    padding: fs(10),
+  },
+  description: {
+    padding: fs(10),
+    fontWeight: 'normal',
+    fontSize: fs(10),
+    color: 'black',
+    textAlign: 'justify',
+    lineHeight: fs(16),
+  },
+  tagContainer: {
+    padding: fs(10),
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: fs(10),
+  },
+  tag: {
+    padding: fs(12),
+    backgroundColor: '#e26a00',
+    borderRadius: fs(50),
+  },
+  tagText: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: fs(12),
   },
 });

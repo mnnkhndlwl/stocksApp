@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Image, StyleSheet, TextInput, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {fs} from '../utils/util.style';
 
 // Screens
 import TopGainersScreen from './screens/TopGainers/index';
 import TopLosersScreen from './screens/TopLosers/index';
 import DetailsScreen from './screens/Details/index';
+import Search from './screens/Search';
 
 // Screen names
 const loss = 'Top-Gainers';
@@ -22,18 +23,11 @@ function MainTabs() {
       initialRouteName={loss}
       screenOptions={({route}) => ({
         headerTitle: 'Stocks App',
-        headerTitleStyle: {
-          fontSize: fs(16),
-          fontWeight: 'bold',
-          color: 'black',
-        },
+        headerTitleStyle: styles.headerTitle,
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: 'black',
         tabBarActiveBackgroundColor: route.name !== gain ? 'green' : 'red',
-        tabBarLabelStyle: {
-          fontSize: fs(12),
-          fontWeight: 'bold',
-        },
+        tabBarLabelStyle: styles.labelStyle,
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           let rn = route.name;
@@ -42,7 +36,7 @@ function MainTabs() {
             return (
               <Image
                 resizeMode="contain"
-                style={{height: fs(24), width: fs(24), marginRight: fs(16)}}
+                style={styles.tabIcon}
                 source={require('../assests/images/gain.png')}
               />
             );
@@ -50,7 +44,7 @@ function MainTabs() {
             return (
               <Image
                 resizeMode="contain"
-                style={{height: fs(24), width: fs(24), marginRight: fs(16)}}
+                style={styles.tabIcon}
                 source={require('../assests/images/loss.png')}
               />
             );
@@ -77,19 +71,22 @@ function MainContainer() {
       <Stack.Screen
         name="Details"
         component={DetailsScreen}
-        options={{
+        options={({navigation}) => ({
           headerTitle: 'Details',
           headerTitleStyle: styles.headerStyle,
           headerRight: () => (
-            <View style={styles.searchContainer}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search"
-                placeholderTextColor="gray"
-              />
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+              <View style={styles.searchContainer}>
+                <Text style={styles.searchInput}> Search </Text>
+              </View>
+            </TouchableOpacity>
           ),
-        }}
+        })}
+      />
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -109,10 +106,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: fs(10),
     borderColor: 'black',
     borderWidth: fs(1),
+    fontSize: fs(12),
+    paddingVertical: fs(4),
   },
   headerStyle: {
     fontSize: fs(16),
     fontWeight: 'bold',
     color: 'black',
+  },
+  tabIcon: {height: fs(24), width: fs(24), marginRight: fs(16)},
+  headerTitle: {fontSize: fs(16), fontWeight: 'bold', color: 'black'},
+  labelStyle: {
+    fontSize: fs(12),
+    fontWeight: 'bold',
   },
 });

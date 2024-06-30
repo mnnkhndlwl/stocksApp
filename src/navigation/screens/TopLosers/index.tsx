@@ -53,18 +53,8 @@ export default function TopLosersScreen({navigation}) {
                 />
                 <Text style={styles.tittleText}>{StockData?.ticker}</Text>
                 <Text style={styles.text}>$ {StockData?.price} </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: fs(6),
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: fs(12),
-                      fontWeight: 'bold',
-                      color: 'red',
-                    }}>
+                <View style={styles.percentageContainer}>
+                  <Text style={styles.percentage}>
                     {StockData?.change_percentage}
                   </Text>
                   <Image
@@ -119,5 +109,15 @@ const styles = StyleSheet.create({
   triangle: {
     width: fs(12),
     height: fs(12),
+  },
+  percentageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: fs(6),
+  },
+  percentage: {
+    fontSize: fs(12),
+    fontWeight: 'bold',
+    color: 'red',
   },
 });
